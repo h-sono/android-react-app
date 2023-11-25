@@ -10,17 +10,22 @@ export const Welcome = (props: WelcomeProps) => {
 
   return (
     <View style={styles.welcome}>
-      <Image style={styles.image} source={{ uri:'https://facebook.github.io/react-native/img/header_logo.png' }} />
+      <Image
+        style={styles.image}
+        source={{
+          uri: 'https://facebook.github.io/react-native/img/header_logo.png',
+        }}
+      />
       <Text style={styles.message}>Welcome to {name} !</Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   message: {
     padding: 10,
     color: 'blue',
-    fontSize: 20
+    fontSize: 20,
   },
   welcome: {
     padding: 10,
@@ -30,13 +35,13 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     width: 250,
     heigth: 270,
-    backgroundColor: 'lightgray'
+    backgroundColor: 'lightgray',
   },
   image: {
     width: 200,
     height: 200,
     borderStyle: 'solid',
     borderWidth: 1,
-    borderColor: 'black'
-  }
+    borderColor: 'black',
+  },
 });

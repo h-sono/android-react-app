@@ -4,10 +4,12 @@
 - ```C:\Users\sonob\AppData\Local\Android\Sdk\emulator>```
 - エミュレーター一覧を取得する。
 - ```$ emulator -list-avds```
-- エミュレーターを指定して起動する。
+- エミュレーターを指定して起動する。ハードウェアアクセラレータが使用できない場合-gpuでソフトウェアアクセラレータを指定する。
 - ```$ emulator -avd {avd名}```
 - 例：```$ emulator -avd Pixel_7_Pro_API_34 -gpu swiftshader_indirect```
+- 例：```$ emulator -avd Pixel_7_Pro_API_34 -gpu guest```(ゲスト側のソフトウェア レンダリングを使用。このオプションの場合、エミュレータのグラフィック品質とパフォーマンスが最も低くなる。)
 ※ヘルプは```$ emulator --help```
+※使用するアクセラレータに関してはAndroid公式ドキュメント：https://developer.android.com/studio/run/emulator-acceleration?hl=ja#avd-gpu
 
 ## React Nativeでの開発
 ### 実機デバッグ
