@@ -1,48 +1,45 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, FlatList, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, SectionList, StatusBar } from 'react-native';
 import { Header } from 'react-native-elements';
 
 interface itemType {
-  name: string;
-  age: number;
-  mail: string;
+  title: string;
+  data: Array<string>;
 }
 
 export default class App extends Component {
-  items: itemType[] = [
-    { name: 'Taro', age: 36, mail: 'taro@yamada' },
-    { name: 'Hanako', age: 29, mail: 'hanako@flower' },
-    { name: 'Sachiko', age: 47, mail: 'sachiko@happy' },
-    { name: 'Tuyano', age: 123, mail: 'Tuyano@yamada' },
+  sections: itemType[] = [
+    { title: 'Computer', data: ['Windows', 'macOS', 'ChromeOS'] },
+    { title: 'Mobile', data: ['Android', 'iOS'] },
   ];
 
   constructor(props) {
     super(props);
     StatusBar.setBarStyle('dark-content', true);
-    StatusBar.setBackgroundColor('#008080', true);
+    StatusBar.setBackgroundColor('#008089', true);
     this.state = {
       message: 'select me!',
     };
   }
 
-  getItem = ({ item }) => {
-    return (
-      <View style={styles.item}>
-        <Text style={styles.itemTitle} onPress={() => this.doAction(item)}>
-          {item.name}({item.age})
-        </Text>
-        <Text style={styles.itemMail}>{item.mail}</Text>
-        <Text style={styles.item}>{item.key}</Text>
-      </View>
-    );
+  doActionItem = (item) => {
+    this.setState({ message: 'select: ' + item + ' item.' });
   };
 
-  doAction = (item) => {
-    this.setState({
-      selected: item.id * 1,
-      message:
-        'select: ' + item.name.toString() + '(' + item.age.toString() + ')',
-    });
+  getItem = ({ item }) => (
+    <Text style={styles.item} onPress={() => this.doActionItem(item)}>
+      {item}
+    </Text>
+  );
+
+  getSection = ({ section }) => (
+    <Text style={styles.section} onPress={() => this.doActionSec(section)}>
+      {section.title}
+    </Text>
+  );
+
+  doActionSec = (section) => {
+    this.setState({ message: 'select: ' + section.title + ' sec.' });
   };
 
   render() {
@@ -52,7 +49,12 @@ export default class App extends Component {
         <View style={styles.body}>
           <Text style={styles.title}>Layout</Text>
           <Text style={styles.message}>{this.state.message}</Text>
-          <FlatList data={this.items} renderItem={this.getItem} />
+          <SectionList
+            sections={this.sections}
+            renderItem={this.getItem}
+            renderSectionHeader={this.getSection}
+            keyExtractor={(item, index) => index}
+          />
         </View>
       </View>
     );
@@ -84,19 +86,10 @@ const styles = StyleSheet.create({
     margin: 5,
     fontSize: 24,
   },
-  itemTitle: {
+  section: {
     padding: 10,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    backgroundColor: 'white',
+    margin: 2,
     fontSize: 24,
-    color: 'blue',
-  },
-  itemMail: {
-    textAlign: 'right',
-    padding: 3,
-    fontSize: 18,
-    backgroundColor: '#000066',
-    color: 'white',
+    fontWeight: 'bold',
   },
 });
