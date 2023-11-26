@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { CheckBox, Header } from 'react-native-elements';
+import { ButtonGroup, Header } from 'react-native-elements';
 
 export default class App extends Component {
+  buttons = [
+    { title: 'One', element: () => <Text style={styles.item}>One</Text> },
+    { title: 'Two', element: () => <Text style={styles.item}>Two</Text> },
+    { title: 'Three', element: () => <Text style={styles.item}>Three</Text> },
+  ];
+
   constructor(props) {
     super(props);
     this.state = {
       message: 'check me!',
-      checked: true,
+      selectedIndex: 0,
     };
   }
 
-  doAction = () =>
+  doAction = (selectedIndex) =>
     this.setState({
-      message: 'Checkbox: ' + !this.state.checked,
-      checked: !this.state.checked,
+      message:
+        'Selected: [' + selectedIndex + ']' + this.buttons[selectedIndex].title,
+      selectedIndex: selectedIndex,
     });
 
   render() {
@@ -24,10 +31,11 @@ export default class App extends Component {
         <View style={styles.body}>
           <Text style={styles.title}>Layout</Text>
           <Text style={styles.message}>{this.state.message}</Text>
-          <CheckBox
-            title='Checkbox'
+          <ButtonGroup
             onPress={this.doAction}
-            checked={this.state.checked}
+            selectedIndex={this.state.selectedIndex}
+            buttons={this.buttons}
+            containerStyle={{ height: 75 }}
           />
         </View>
       </View>
@@ -37,12 +45,7 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
   base: {
-    padding: 0,
-    flex: 1,
-  },
-  body: {
-    padding: 10,
-    flex: 1,
+    padding: 25,
   },
   title: {
     padding: 10,
@@ -57,13 +60,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   item: {
-    margin: 5,
-    fontSize: 24,
-  },
-  section: {
-    padding: 10,
-    margin: 2,
-    fontSize: 24,
-    fontWeight: 'bold',
+    color: 'blue',
+    fontSize: 28,
   },
 });
