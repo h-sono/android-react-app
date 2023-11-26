@@ -1,46 +1,21 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, SectionList, StatusBar } from 'react-native';
-import { Header } from 'react-native-elements';
-
-interface itemType {
-  title: string;
-  data: Array<string>;
-}
+import { StyleSheet, Text, View } from 'react-native';
+import { CheckBox, Header } from 'react-native-elements';
 
 export default class App extends Component {
-  sections: itemType[] = [
-    { title: 'Computer', data: ['Windows', 'macOS', 'ChromeOS'] },
-    { title: 'Mobile', data: ['Android', 'iOS'] },
-  ];
-
   constructor(props) {
     super(props);
-    StatusBar.setBarStyle('dark-content', true);
-    StatusBar.setBackgroundColor('#008089', true);
     this.state = {
-      message: 'select me!',
+      message: 'check me!',
+      checked: true,
     };
   }
 
-  doActionItem = (item) => {
-    this.setState({ message: 'select: ' + item + ' item.' });
-  };
-
-  getItem = ({ item }) => (
-    <Text style={styles.item} onPress={() => this.doActionItem(item)}>
-      {item}
-    </Text>
-  );
-
-  getSection = ({ section }) => (
-    <Text style={styles.section} onPress={() => this.doActionSec(section)}>
-      {section.title}
-    </Text>
-  );
-
-  doActionSec = (section) => {
-    this.setState({ message: 'select: ' + section.title + ' sec.' });
-  };
+  doAction = () =>
+    this.setState({
+      message: 'Checkbox: ' + !this.state.checked,
+      checked: !this.state.checked,
+    });
 
   render() {
     return (
@@ -49,11 +24,10 @@ export default class App extends Component {
         <View style={styles.body}>
           <Text style={styles.title}>Layout</Text>
           <Text style={styles.message}>{this.state.message}</Text>
-          <SectionList
-            sections={this.sections}
-            renderItem={this.getItem}
-            renderSectionHeader={this.getSection}
-            keyExtractor={(item, index) => index}
+          <CheckBox
+            title='Checkbox'
+            onPress={this.doAction}
+            checked={this.state.checked}
           />
         </View>
       </View>
