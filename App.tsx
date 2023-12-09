@@ -1,42 +1,59 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { ButtonGroup, Header } from 'react-native-elements';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  StatusBar,
+  TextInput,
+} from 'react-native';
+import { Input, Icon, Header } from 'react-native-elements';
 
 export default class App extends Component {
-  buttons = [
-    { title: 'One', element: () => <Text style={styles.item}>One</Text> },
-    { title: 'Two', element: () => <Text style={styles.item}>Two</Text> },
-    { title: 'Three', element: () => <Text style={styles.item}>Three</Text> },
-  ];
-
   constructor(props) {
     super(props);
     this.state = {
-      message: 'check me!',
-      selectedIndex: 0,
+      message: 'input!',
     };
   }
 
-  doAction = (selectedIndex) =>
-    this.setState({
-      message:
-        'Selected: [' + selectedIndex + ']' + this.buttons[selectedIndex].title,
-      selectedIndex: selectedIndex,
-    });
+  doActionLeft = () => {
+    Alert.alert('Left icon tapperd!');
+  };
+  doActionRight = () => {
+    Alert.alert('Right icon tapperd!');
+  };
 
   render() {
     return (
       <View style={styles.base}>
-        <Header />
-        <View style={styles.body}>
+        <StatusBar barStyle='light-content' hidden={false} />
+        <Header
+          leftComponent={{
+            icon: 'menu',
+            color: 'red',
+            size: 35,
+            onPress: this.doActionLeft,
+          }}
+          centerComponent={{
+            text: 'SampleApp',
+            style: styles.header,
+          }}
+          rightComponent={{
+            icon: 'android',
+            color: 'red',
+            size: 35,
+            onPress: this.doActionRight,
+          }}
+        />
+        <View style={styles.base}>
           <Text style={styles.title}>Layout</Text>
-          <Text style={styles.message}>{this.state.message}</Text>
-          <ButtonGroup
-            onPress={this.doAction}
-            selectedIndex={this.state.selectedIndex}
-            buttons={this.buttons}
-            containerStyle={{ height: 75 }}
-          />
+          <Text style={styles.message}>This is sample message.</Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+            <View style={styles.view} />
+            <View style={styles.view} />
+            <View style={styles.view} />
+          </View>
         </View>
       </View>
     );
@@ -45,7 +62,7 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
   base: {
-    padding: 25,
+    padding: 0,
   },
   title: {
     padding: 10,
@@ -56,11 +73,22 @@ const styles = StyleSheet.create({
   },
   message: {
     padding: 10,
-    color: 'blue',
+    color: 'green',
     fontSize: 20,
   },
   item: {
     color: 'blue',
     fontSize: 28,
+  },
+  header: {
+    color: 'white',
+    fontSize: 28,
+    fontWeight: 'bold',
+  },
+  view: {
+    width: 100,
+    height: 100,
+    margin: 5,
+    backgroundColor: '#6666aa',
   },
 });
