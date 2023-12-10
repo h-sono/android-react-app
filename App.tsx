@@ -1,27 +1,19 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Alert,
-  StatusBar,
-  TextInput,
-} from 'react-native';
-import { Input, Icon, Header } from 'react-native-elements';
+import { StyleSheet, Text, View, StatusBar, Alert, Button } from 'react-native';
+import { Tile } from '@rneui/themed';
+import { Header } from 'react-native-elements';
+import { WebView } from 'react-native-webview';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      message: 'input!',
-    };
+    StatusBar.setBarStyle('dark-content', true);
+    StatusBar.setBackgroundColor('#008080', true);
+    this.state = { url: '' };
   }
 
-  doActionLeft = () => {
-    Alert.alert('Left icon tapperd!');
-  };
-  doActionRight = () => {
-    Alert.alert('Right icon tapperd!');
+  doAction = () => {
+    this.setState({ url: 'https://github.com/facebook/react-native' });
   };
 
   render() {
@@ -29,31 +21,19 @@ export default class App extends Component {
       <View style={styles.base}>
         <StatusBar barStyle='light-content' hidden={false} />
         <Header
-          leftComponent={{
-            icon: 'menu',
-            color: 'red',
-            size: 35,
-            onPress: this.doActionLeft,
-          }}
           centerComponent={{
             text: 'SampleApp',
             style: styles.header,
           }}
-          rightComponent={{
-            icon: 'android',
-            color: 'red',
-            size: 35,
-            onPress: this.doActionRight,
-          }}
         />
-        <View style={styles.base}>
-          <Text style={styles.title}>Layout</Text>
-          <Text style={styles.message}>This is sample message.</Text>
-          <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-            <View style={styles.view} />
-            <View style={styles.view} />
-            <View style={styles.view} />
-          </View>
+        <View style={styles.body}>
+          <WebView
+            source={{ uri: this.state.url }}
+            onLoad={() => {
+              if (this.state.url != '') Alert.alert('web page loaded!');
+            }}
+          />
+          <Button title='Click' onPress={this.doAction} />
         </View>
       </View>
     );
@@ -63,32 +43,27 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   base: {
     padding: 0,
+    flex: 1,
   },
-  title: {
-    padding: 10,
-    color: 'red',
-    textAlign: 'center',
-    fontSize: 60,
-    fontWeight: 'bold',
-  },
-  message: {
-    padding: 10,
-    color: 'green',
-    fontSize: 20,
-  },
-  item: {
-    color: 'blue',
-    fontSize: 28,
+  body: {
+    padding: 0,
+    flex: 1,
   },
   header: {
     color: 'white',
     fontSize: 28,
     fontWeight: 'bold',
   },
-  view: {
-    width: 100,
-    height: 100,
-    margin: 5,
-    backgroundColor: '#6666aa',
+  tileFooter: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  tileCaption: {
+    fontSize: 18,
+  },
+  title: {
+    fontSize: 30,
+    color: 'red',
   },
 });

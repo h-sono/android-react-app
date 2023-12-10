@@ -44,3 +44,8 @@
 - 「s」を押下し、「Expo Go」に切り替えて Expo でデバッグする。
 - 別のコマンドプロンプトでエミュレーターを起動する。「AMD 製 CPU でのエミュレーター起動方法」を参照。
 - エミュレーターが起動したら、アプリを起動しているコマンドプロンプトにて「a」を押下し、エミュレーターにてアプリを起動する。
+
+### WebView
+
+- Web ページの URL を埋め込んでアプリ上で Web ページを表示する。 -`$ npm install react-native-webview`
+- `import { WebView } from 'react-native-webview';`
